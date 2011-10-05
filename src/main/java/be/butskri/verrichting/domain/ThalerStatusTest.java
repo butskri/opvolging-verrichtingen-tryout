@@ -1,0 +1,46 @@
+package be.butskri.verrichting.domain;
+
+import static be.butskri.verrichting.domain.ThalerStatus.INIT;
+import static be.butskri.verrichting.domain.ThalerStatus.MISSCHIEN_UITGEVOERD_NIET_THALER_FOUT;
+import static be.butskri.verrichting.domain.ThalerStatus.NIET_UITGEVOERD_NIET_THALER_FOUT;
+import static be.butskri.verrichting.domain.ThalerStatus.UITGEVOERD;
+import static be.butskri.verrichting.domain.ThalerStatus.UITGEVOERD_MET_THALER_FOUT;
+import static junit.framework.Assert.assertEquals;
+
+import org.junit.Test;
+
+public class ThalerStatusTest {
+
+	@Test
+	public void initAndIetsIsSteedsIets() {
+		assertEquals(INIT, INIT.and(INIT));
+		assertEquals(MISSCHIEN_UITGEVOERD_NIET_THALER_FOUT, INIT.and(MISSCHIEN_UITGEVOERD_NIET_THALER_FOUT));
+		assertEquals(NIET_UITGEVOERD_NIET_THALER_FOUT, INIT.and(NIET_UITGEVOERD_NIET_THALER_FOUT));
+		assertEquals(UITGEVOERD, ThalerStatus.INIT.and(UITGEVOERD));
+		assertEquals(UITGEVOERD_MET_THALER_FOUT, INIT.and(UITGEVOERD_MET_THALER_FOUT));
+	}
+
+	@Test
+	public void misschienUitgevoerdNietThalerFoutAndTest() {
+		assertEquals(MISSCHIEN_UITGEVOERD_NIET_THALER_FOUT, MISSCHIEN_UITGEVOERD_NIET_THALER_FOUT.and(MISSCHIEN_UITGEVOERD_NIET_THALER_FOUT));
+		assertEquals(MISSCHIEN_UITGEVOERD_NIET_THALER_FOUT, MISSCHIEN_UITGEVOERD_NIET_THALER_FOUT.and(NIET_UITGEVOERD_NIET_THALER_FOUT));
+		assertEquals(UITGEVOERD, MISSCHIEN_UITGEVOERD_NIET_THALER_FOUT.and(UITGEVOERD));
+		assertEquals(UITGEVOERD_MET_THALER_FOUT, MISSCHIEN_UITGEVOERD_NIET_THALER_FOUT.and(UITGEVOERD_MET_THALER_FOUT));
+	}
+
+	@Test
+	public void nietUitgevoerdAndNietThalerFoutAndTest() {
+		assertEquals(MISSCHIEN_UITGEVOERD_NIET_THALER_FOUT, NIET_UITGEVOERD_NIET_THALER_FOUT.and(MISSCHIEN_UITGEVOERD_NIET_THALER_FOUT));
+		assertEquals(NIET_UITGEVOERD_NIET_THALER_FOUT, NIET_UITGEVOERD_NIET_THALER_FOUT.and(NIET_UITGEVOERD_NIET_THALER_FOUT));
+		assertEquals(UITGEVOERD, NIET_UITGEVOERD_NIET_THALER_FOUT.and(UITGEVOERD));
+		assertEquals(UITGEVOERD_MET_THALER_FOUT, NIET_UITGEVOERD_NIET_THALER_FOUT.and(UITGEVOERD_MET_THALER_FOUT));
+	}
+
+	@Test
+	public void uitgevoerdMetThalerFoutAndTest() {
+		assertEquals(MISSCHIEN_UITGEVOERD_NIET_THALER_FOUT, UITGEVOERD_MET_THALER_FOUT.and(MISSCHIEN_UITGEVOERD_NIET_THALER_FOUT));
+		assertEquals(NIET_UITGEVOERD_NIET_THALER_FOUT, UITGEVOERD_MET_THALER_FOUT.and(NIET_UITGEVOERD_NIET_THALER_FOUT));
+		assertEquals(UITGEVOERD, UITGEVOERD_MET_THALER_FOUT.and(UITGEVOERD));
+		assertEquals(UITGEVOERD_MET_THALER_FOUT, UITGEVOERD_MET_THALER_FOUT.and(UITGEVOERD_MET_THALER_FOUT));
+	}
+}
