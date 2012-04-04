@@ -76,7 +76,6 @@ public class VerrichtingService {
 		};
 	}
 
-	@SuppressWarnings("unchecked")
 	private <T> T doInTransactionCatchingAllExceptions(final TransactionCallback transactionCallback) {
 		try {
 			return doInTransactionCatchingAllExceptions(transactionCallback);

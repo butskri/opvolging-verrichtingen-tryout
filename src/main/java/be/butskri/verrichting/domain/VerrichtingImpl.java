@@ -8,6 +8,7 @@ public abstract class VerrichtingImpl implements Verrichting {
 	private VerrichtingStatus status = VerrichtingStatus.DRAFT;
 	private List<Deelverrichting> deelverrichtingen;
 
+	@Override
 	public VerrichtingId getVerrichtingId() {
 		return verrichtingId;
 	}

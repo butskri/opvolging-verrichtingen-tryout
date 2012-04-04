@@ -17,7 +17,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>be.butskri</groupId>
-			<artifactId>commons-test</artifactId>
+			<artifactId>butskri-commontest</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 			<scope>test</scope>
 		</dependency>

@@ -20,29 +20,35 @@ public abstract class DeelVerrichtingImpl implements Deelverrichting {
 		listeners.add(listener);
 	}
 
+	@Override
 	public void rollbackInitierenBevestiging() {
 		annuleer(VerrichtingStatus.DRAFT);
 		this.acties = null;
 	}
 
+	@Override
 	public void bevestig() {
 		acties.bevestig();
 		setStatus(VerrichtingStatus.GEREGISTREERD);
 	}
 
+	@Override
 	public void annuleer() {
 		annuleer(VerrichtingStatus.GEANNULEERD);
 	}
 
+	@Override
 	public void onderteken() {
 		acties.onderteken();
 		setStatus(VerrichtingStatus.GETEKEND);
 	}
 
+	@Override
 	public Long getLogboekId() {
 		return logboekId;
 	}
 
+	@Override
 	public void setLogboekId(Long logboekId) {
 		this.logboekId = logboekId;
 	}
