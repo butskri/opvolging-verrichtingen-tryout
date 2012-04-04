@@ -9,4 +9,9 @@ public class IdempotentieId {
 	public IdempotentieId() {
 		this.id = UUID.randomUUID().toString();
 	}
+	
+	@Override
+	public String toString() {
+		return id;
+	}
 }

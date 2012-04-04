@@ -38,7 +38,8 @@ public enum VerrichtingStatus {
 	private static final List<VerrichtingStatus> REGISTRATIE_GROUP = Arrays.asList(REGISTRATIE_MISLUKT, GEINITIEERD, GEANNULEERD, GEREGISTREERD);
 	private static final List<VerrichtingStatus> ANNULATIE_GROUP = Arrays.asList(NIET_GETEKEND, GEANNULEERD);
 	private static final List<VerrichtingStatus> VERWERKING_GROUP = Arrays.asList(GETEKEND, VERWERKT);
-	private static final List<List<VerrichtingStatus>> ALL_GROUPS = Arrays.asList(DRAFT_GROUP, REGISTRATIE_GROUP, ANNULATIE_GROUP, VERWERKING_GROUP);
+	@SuppressWarnings("unchecked")
+	private static final List<List<VerrichtingStatus>> ALL_GROUPS = Arrays.<List<VerrichtingStatus>>asList(DRAFT_GROUP, REGISTRATIE_GROUP, ANNULATIE_GROUP, VERWERKING_GROUP);
 
 	public VerrichtingStatus and(VerrichtingStatus other) {
 		List<VerrichtingStatus> group = findGroup(this, other);
