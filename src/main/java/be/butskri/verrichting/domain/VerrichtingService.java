@@ -32,8 +32,8 @@ public class VerrichtingService {
 		}
 	}
 
-	private TransactionCallback rollbackInitierenBevestiging(final VerrichtingId verrichtingId) {
-		return new TransactionCallback() {
+	private TransactionCallback<Object> rollbackInitierenBevestiging(final VerrichtingId verrichtingId) {
+		return new TransactionCallback<Object>() {
 
 			@Override
 			public Object doInTransaction(TransactionStatus status) {
@@ -49,12 +49,12 @@ public class VerrichtingService {
 
 	}
 
-	private TransactionCallback annuleerRegistratieIndienNodig(VerrichtingId verrichtingId) {
+	private TransactionCallback<Object> annuleerRegistratieIndienNodig(VerrichtingId verrichtingId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	private TransactionCallback doeRegistratie(VerrichtingId verrichtingId) {
+	private TransactionCallback<Object> doeRegistratie(VerrichtingId verrichtingId) {
 		return new VerrichtingTransactionCallback<Object>(verrichtingId) {
 			@Override
 			protected Object voerUit(Verrichting verrichting) {
@@ -64,8 +64,8 @@ public class VerrichtingService {
 		};
 	}
 
-	private TransactionCallback initieerVerrichting(final Verrichting verrichting) {
-		return new TransactionCallback() {
+	private TransactionCallback<Object> initieerVerrichting(final Verrichting verrichting) {
+		return new TransactionCallback<Object>() {
 
 			@Override
 			public Object doInTransaction(TransactionStatus status) {
@@ -76,7 +76,7 @@ public class VerrichtingService {
 		};
 	}
 
-	private <T> T doInTransactionCatchingAllExceptions(final TransactionCallback transactionCallback) {
+	private <T> T doInTransactionCatchingAllExceptions(final TransactionCallback<Object> transactionCallback) {
 		try {
 			return doInTransactionCatchingAllExceptions(transactionCallback);
 		} catch (RuntimeException e) {
@@ -85,7 +85,7 @@ public class VerrichtingService {
 	}
 
 	@SuppressWarnings("unchecked")
-	private <T> T doInTransaction(final TransactionCallback transactionCallback) {
+	private <T> T doInTransaction(final TransactionCallback<Object> transactionCallback) {
 		ExceptionCatchingTransactionCallback exceptionCatchingTransactionCallback = new ExceptionCatchingTransactionCallback(transactionCallback);
 		T result = (T) transactionTemplate.execute(exceptionCatchingTransactionCallback);
 		if (exceptionCatchingTransactionCallback.getCaughtException() != null) {
@@ -94,12 +94,12 @@ public class VerrichtingService {
 		return result;
 	}
 
-	private static class ExceptionCatchingTransactionCallback implements TransactionCallback {
+	private static class ExceptionCatchingTransactionCallback implements TransactionCallback<Object> {
 
-		private TransactionCallback transactionCallback;
+		private TransactionCallback<Object> transactionCallback;
 		private PreconditieNietVoldaanException caughtException;
 
-		public ExceptionCatchingTransactionCallback(TransactionCallback transactionCallback) {
+		public ExceptionCatchingTransactionCallback(TransactionCallback<Object> transactionCallback) {
 			this.transactionCallback = transactionCallback;
 		}
 
@@ -118,7 +118,7 @@ public class VerrichtingService {
 		}
 	}
 
-	private abstract class VerrichtingTransactionCallback<T> implements TransactionCallback {
+	private abstract class VerrichtingTransactionCallback<T> implements TransactionCallback<T> {
 
 		private VerrichtingId verrichtingId;
 
